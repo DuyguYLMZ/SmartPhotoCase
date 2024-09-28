@@ -19,7 +19,7 @@ import com.duyguyilmaz.smartphotocase.model.PhotoViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SortList(photoList: PhotoViewModel) {
-    val options = listOf("Name", "Date")
+    val options = listOf("Name\n(Descending)", "Date\n(Ascending)")
     var selectedOptionText by remember { mutableStateOf(options[0]) }
     var expanded by remember { mutableStateOf(false) }
 
