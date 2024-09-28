@@ -43,12 +43,20 @@ fun CameraOpen(viewModel: PhotoViewModel, context: Context) {
         )
     }
 
+    fun isBitmapPortrait(bitmap: Bitmap): Boolean {
+        return bitmap.height > bitmap.width
+    }
+
     val cameraLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
             if (success) {
                 val rotation = getImageRotation(file.absolutePath)
-                val  bitmap = BitmapFactory.decodeFile(file.absolutePath)?.let {
-                    rotateBitmap(it, rotation)
+                val bitmap = BitmapFactory.decodeFile(file.absolutePath)?.let {
+                    if (isBitmapPortrait(it)) {
+                        BitmapFactory.decodeFile(file.absolutePath)
+                    } else {
+                        rotateBitmap(it, rotation)
+                    }
                 }
                 val savedUri = bitmap?.let {
                     saveImageToExternalStorage(
